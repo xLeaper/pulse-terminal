@@ -1,0 +1,104 @@
+skill,skill_group
+Cybersecurity,Cybersecurity & IT
+IAM,Cybersecurity & IT
+Risk Management,Cybersecurity & IT
+SIEM,Cybersecurity & IT
+Security,Cybersecurity & IT
+Technical Support,Cybersecurity & IT
+AI,Data & AI
+AI/ML,Data & AI
+Blockchain,Data & AI
+Data Analysis,Data & AI
+Data Analytics,Data & AI
+Data Engineering,Data & AI
+Data Science,Data & AI
+Fundraising,Data & AI
+Generative AI,Data & AI
+Machine Learning,Data & AI
+NLP,Data & AI
+PyTorch,Data & AI
+Python,Data & AI
+Ruby on Rails,Data & AI
+SQL,Data & AI
+Spark,Data & AI
+TensorFlow,Data & AI
+Design,Design & UX
+Editing,Design & UX
+Figma,Design & UX
+Graphic Design,Design & UX
+Motion Design,Design & UX
+UI/UX,Design & UX
+UX Research,Design & UX
+User Research,Design & UX
+Video Editing,Design & UX
+Accounting,Finance & Business
+ERP,Finance & Business
+Excel,Finance & Business
+Finance,Finance & Business
+Forecasting,Finance & Business
+Power BI,Finance & Business
+Communication,HR & Recruitment
+HR,HR & Recruitment
+Recruitment,HR & Recruitment
+Advertising,Marketing & Growth
+CRM,Marketing & Growth
+Content Strategy,Marketing & Growth
+Google Analytics,Marketing & Growth
+Marketing Automation,Marketing & Growth
+Paid Marketing,Marketing & Growth
+Performance Marketing,Marketing & Growth
+SEO,Marketing & Growth
+Social Media,Marketing & Growth
+Customer Service,Operations & Support
+Onboarding,Operations & Support
+Operations,Operations & Support
+.NET,Other
+After Effects,Other
+Android,Other
+Automation,Other
+Budgeting,Other
+C#,Other
+C++,Other
+CI/CD,Other
+CMS,Other
+Chat Support,Other
+Customer Acquisition,Other
+Financial Modeling,Other
+Go,Other
+Laravel,Other
+Marketplace,Other
+PHP,Other
+REST,Other
+Research,Other
+SAP,Other
+SaaS,Other
+Sales,Other
+Shopify,Other
+Startup,Other
+Tableau,Other
+Testing,Other
+TypeScript,Other
+User Acquisition,Other
+WordPress,Other
+iOS,Other
+Agile,Product & Project Management
+Product Management,Product & Project Management
+Project Management,Product & Project Management
+Roadmapping,Product & Project Management
+Scrum,Product & Project Management
+Stakeholder Management,Product & Project Management
+API,Software & Engineering
+AWS,Software & Engineering
+Azure,Software & Engineering
+Backend,Software & Engineering
+Cloud,Software & Engineering
+Docker,Software & Engineering
+Frontend,Software & Engineering
+Full Stack,Software & Engineering
+GCP,Software & Engineering
+Git,Software & Engineering
+Java,Software & Engineering
+JavaScript,Software & Engineering
+Kubernetes,Software & Engineering
+Node.js,Software & Engineering
+React,Software & Engineering

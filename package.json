@@ -1,0 +1,34 @@
+{
+  "name": "app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "data:scrape": "node scripts/scrape.mjs",
+    "data:enrich": "node scripts/enrich.mjs",
+    "data:snapshot": "node scripts/build-snapshot.mjs",
+    "data:refresh": "npm run data:scrape && npm run data:enrich && npm run data:snapshot",
+    "qa:screenshots": "node scripts/screenshot.mjs",
+    "qa:visual-diff": "node scripts/visual-diff.mjs"
+  },
+  "dependencies": {
+    "cmdk": "^1.1.1",
+    "csv-parse": "^6.2.1",
+    "next": "16.2.4",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "pixelmatch": "^7.2.0",
+    "pngjs": "^7.0.0",
+    "puppeteer": "^24.42.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+@theme {
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-instrument-serif), "Cormorant Garamond", "Times New Roman", serif;
+
+  /* Surfaces — tinted toward warm amber (hue 65) so the whole UI reads of-a-piece. */
+  --color-surface-0: oklch(0.16 0.012 65);
+  --color-surface-1: oklch(0.20 0.012 65);
+  --color-surface-2: oklch(0.24 0.014 65);
+  --color-surface-3: oklch(0.30 0.016 65);
+
+  /* Borders — hairline only. 1px never thicker. */
+  --color-border-subtle: oklch(0.28 0.014 65);
+  --color-border-strong: oklch(0.42 0.020 65);
+
+  /* Type. */
+  --color-text-primary: oklch(0.94 0.008 75);
+  --color-text-secondary: oklch(0.72 0.010 75);
+  --color-text-tertiary: oklch(0.52 0.012 75);
+  --color-text-on-accent: oklch(0.18 0.014 65);
+
+  /* Signal — the one accent. */
+  --color-signal: oklch(0.83 0.158 75);
+  --color-signal-dim: oklch(0.62 0.120 75);
+  --color-signal-deep: oklch(0.42 0.090 75);
+
+  /* Diverging — meaning only. Pair with shape glyphs. */
+  --color-data-up: oklch(0.78 0.14 165);
+  --color-data-down: oklch(0.64 0.135 22);
+  --color-data-flat: oklch(0.62 0.014 75);
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html, body {
+    background: var(--color-surface-0);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body { min-height: 100vh; }
+
+  /* Tabular figures everywhere a number lives. */
+  .font-mono, [class*="font-mono"], table, pre, code {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum", "ss02";
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 1px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--color-signal-deep);
+    color: var(--color-text-primary);
+  }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--color-surface-0); }
+  ::-webkit-scrollbar-thumb { background: var(--color-border-subtle); border-radius: 0; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-border-strong); }
+}
+
+@layer utilities {
+  .caption {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.3;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+  }
+
+  .caption-primary {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-primary);
+  }
+
+  .display {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2.25rem, 4vw + 1rem, 3.5rem);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--color-text-primary);
+  }
+
+  .section-title {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    line-height: 1.15;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-primary);
+  }
+
+  .cursor-blink {
+    display: inline-block;
+    width: 0.55ch;
+    height: 1em;
+    background: var(--color-signal);
+    margin-left: 0.1ch;
+    vertical-align: -0.12em;
+    animation: cursor-blink 1.05s steps(2) infinite;
+  }
+  @keyframes cursor-blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .cursor-blink { animation: none; opacity: 1; }
+    .ticker-anim { animation: none !important; }
+  }
+
+  [data-density="compact"] .row-cell {
+    padding-block: 0.375rem;
+    height: 1.75rem;
+  }
+
+  .hr-row { border-top: 1px solid var(--color-border-subtle); }
+  .panel { background: var(--color-surface-1); }
+  .panel-2 { background: var(--color-surface-2); }
+
+  .ticker {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-tertiary);
+    letter-spacing: 0.06em;
+  }
+
+  /* Drawer slide-in. transform/opacity only — never layout properties. */
+  @keyframes drawer-in {
+    from { transform: translateX(16px); opacity: 0; }
+    to   { transform: translateX(0);    opacity: 1; }
+  }
+  .drawer-in {
+    animation: drawer-in 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes panel-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .panel-in {
+    animation: panel-in 200ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .drawer-in, .panel-in { animation: none; }
+  }
+}

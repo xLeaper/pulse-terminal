@@ -1,0 +1,5 @@
+file,rows,source_basis,notes
+data/job_postings_raw.csv,381,"User-supplied raw CSV built from Remotive API, The Muse API, and Arbeitnow API rows","Raw job postings with source URLs, date posted, company, title, category, location, job type, tags, and description."
+data/job_market_enriched_from_raw.csv,381,Derived from uploaded job_postings_raw.csv,"Adds normalized categories, inferred seniority, extracted skills, and clearly marked proxy metrics for salary, demand, scarcity, application volume, and time-to-fill."
+data/job_market_enriched_sample.csv,381,Same as job_market_enriched_from_raw.csv,Compatibility filename used by older app versions.
+data/skills_taxonomy_sample.csv,103,Curated from extracted tags/skills and grouped for the app UI,"Classroom taxonomy seed, not a full ESCO/O*NET dump."
