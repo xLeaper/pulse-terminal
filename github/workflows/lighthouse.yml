@@ -1,0 +1,47 @@
+name: Lighthouse
+
+# Runs Lighthouse against all five surfaces on every PR. Fails the check if
+# accessibility falls below 90 or any blocking a11y audit (color-contrast,
+# image-alt, label, etc.) regresses. Uploads a public report URL for review.
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install
+        run: npm ci
+
+      - name: Build snapshot + Next
+        run: |
+          node scripts/build-snapshot.mjs
+          npm run build
+
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          # Boots `npm start` in the background and waits for it.
+          serverBaseUrl: http://localhost:3000
+          serverCommand: npm start
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}

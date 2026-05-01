@@ -1,0 +1,65 @@
+name: Daily data refresh
+
+# Runs the scrape → enrich → snapshot pipeline once per day, commits the
+# refreshed CSVs back to main, which then triggers sync-to-hf.yml and a
+# fresh HF rebuild. End-to-end: cron fires → 4–6 minutes later HF redeploys.
+
+on:
+  schedule:
+    # 06:00 UTC daily (= 02:00 New York / 08:00 Berlin / 16:00 Sydney).
+    # Keep this off-peak for the source APIs.
+    - cron: "0 6 * * *"
+  workflow_dispatch: {} # manual trigger from the Actions tab
+
+# Need write access to push the refreshed CSVs back into the repo.
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install
+        run: npm ci
+
+      - name: Run pipeline
+        run: npm run data:refresh
+
+      - name: Detect changes
+        id: diff
+        run: |
+          if git diff --quiet -- data/; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No data changes detected, skipping commit."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git diff --stat -- data/
+          fi
+
+      - name: Sanity build (only if data changed)
+        if: steps.diff.outputs.changed == 'true'
+        run: npm run build
+
+      - name: Commit + push
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          ROWS=$(awk -F',' 'NR>1' data/job_market_enriched_from_raw.csv | wc -l | tr -d ' ')
+          git commit -m "chore(data): daily refresh — ${ROWS} postings" -m "[skip ci]"
+          git push
+          echo "Pushed. sync-to-hf.yml will mirror to HF on next event."
